@@ -1247,7 +1247,7 @@ dialogContents.forEach((dialogContent) => {
         } else if (currentSelectedOccupation && typeof occupationsMetadata[currentSelectedOccupation].attributes === 'function') {
           setOccupationAttributes(occupationsMetadata[currentSelectedOccupation].attributes);
         }
-        openOccupationSelection(availableOccupations, occupationInput);
+        createOccupationOptions(availableOccupations, occupationInput);
 
         // set min/max for age/height/weight based on selected race
         const ageInput = document.querySelector('input#age');
@@ -1389,7 +1389,7 @@ function openDialogWithContent(e) {
     contentToShow.style.display = 'block';
 }
 
-function openOccupationSelection(availableOccupations, occupationInput) {
+function createOccupationOptions(availableOccupations, occupationInput) {
   const occupationOptions = document.querySelector(`#occupation-dialog #occupation-options-container`);
   occupationOptions.innerHTML = availableOccupations.map((occupation) => {
     return `

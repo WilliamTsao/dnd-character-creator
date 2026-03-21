@@ -1213,43 +1213,7 @@ dialogContents.forEach((dialogContent) => {
       }
 
       if (category === 'team') {
-        const teams = [e.target.dataset.value.slice(0, 2), e.target.dataset.value.slice(2)];
-        const faithInput = document.querySelector('input#faith');
-        if (!faithInput.classList.contains('locked')) {
-          faithInput.value = '';
-          faithInput.disabled = false;
-          faithInput.placeholder = '选择';
-          faithInput.parentElement.classList.remove('disabled');
-        }
-
-        const availableDeities = Object.keys(deityMetadata).filter((deity) => {
-          return deityMetadata[deity].team.includes(teams[0]) || deityMetadata[deity].team.includes(teams[1]);
-        });
-
-        const faithOptions = document.querySelector(`#faith-dialog > #faith-options-container`);
-        faithOptions.innerHTML = availableDeities.map((deity) => {
-          return `
-            <div class="card">
-              <img src="./assets/faith/${deity}.png">
-              <div>
-                <h4>${deityMetadata[deity].title}一一${deityMetadata[deity].name}</h4>
-                <div>
-                  <b>种族：</b>${deityMetadata[deity].race}<br/>
-                  <b>权柄：</b>${deityMetadata[deity].authority}<br/>
-                  <b>阵营：</b>${deityMetadata[deity].team.join('')}<br/>
-                  <b>武器：</b>${deityMetadata[deity].weapon.join('，')}
-                </div>
-                <button data-value="${deityMetadata[deity].name}">选择</button>
-              </div>
-            </div>
-          `;
-        }).join('');
-        faithOptions.querySelectorAll('button').forEach((btn) => {
-          btn.addEventListener('click', (evt) => {
-            closeDialog();
-            faithInput.value = evt.target.dataset.value;
-          });
-        });
+        setTeam(e.target.dataset.value);
       }
     });
   });
@@ -1466,6 +1430,31 @@ function resetOccupationSideEffects() {
 
   const teamInput = document.querySelector('input#team');
   teamInput.value = '';
+}
+
+function createFaithOptions(availableDeities, onSelect) {
+  const container = document.getElementById('faith-options-container');
+  container.innerHTML = availableDeities.map(deity => `
+    <div class="card">
+      <img src="./assets/faith/${deity}.png">
+      <div>
+        <h4>${deityMetadata[deity].title}一一${deityMetadata[deity].name}</h4>
+        <div>
+          <b>种族：</b>${deityMetadata[deity].race}<br/>
+          <b>权柄：</b>${deityMetadata[deity].authority}<br/>
+          <b>阵营：</b>${deityMetadata[deity].team.join('')}<br/>
+          <b>武器：</b>${deityMetadata[deity].weapon.join('，')}
+        </div>
+        <button data-value="${deityMetadata[deity].name}">选择</button>
+      </div>
+    </div>
+  `).join('');
+  container.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', evt => {
+      closeDialog();
+      onSelect(evt.target.dataset.value);
+    });
+  });
 }
 
 function returnToOccupationOptions(cachedScrollPosition = 0) {

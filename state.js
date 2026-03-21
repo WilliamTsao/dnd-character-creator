@@ -166,3 +166,31 @@ function setBranch(value, element) {
 
   persistState();
 }
+
+function setTeam(value) {
+  characterState.team = value;
+  document.getElementById('team').value = value;
+
+  const faithInput = document.getElementById('faith');
+  if (!faithInput.classList.contains('locked')) {
+    characterState.faith = '';
+    faithInput.value = '';
+    faithInput.disabled = false;
+    faithInput.placeholder = '选择';
+    faithInput.parentElement.classList.remove('disabled');
+  }
+
+  const teams = [value.slice(0, 2), value.slice(2)];
+  const availableDeities = Object.keys(deityMetadata).filter(deity =>
+    deityMetadata[deity].team.includes(teams[0]) || deityMetadata[deity].team.includes(teams[1])
+  );
+  createFaithOptions(availableDeities, setFaith);
+
+  persistState();
+}
+
+function setFaith(value) {
+  characterState.faith = value;
+  document.getElementById('faith').value = value;
+  persistState();
+}

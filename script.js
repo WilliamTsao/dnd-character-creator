@@ -1566,10 +1566,14 @@ function setAbilities(abilities) {
     const limit = ability.selectableCount;
     const remainingBoxes = section.querySelectorAll('input[type=checkbox]:not(:disabled)');
     remainingBoxes.forEach(box => {
-      box.addEventListener('change', updateState);
+      box.addEventListener('change', enforceLimit);
+      box.addEventListener('change', () => {
+        characterState.skills[box.id] = box.checked;
+        persistState();
+      });
     });
 
-    function updateState() {
+    function enforceLimit() {
       let checkedCount = 0;
       remainingBoxes.forEach((b) => {
         if (b.checked) {
@@ -1583,7 +1587,12 @@ function setAbilities(abilities) {
       });
     }
 
-    updateState();
+    // Sync pre-selected skills to state
+    checkboxes.forEach(cb => {
+      if (cb.checked) characterState.skills[cb.id] = true;
+    });
+
+    enforceLimit();
   });
 }
 

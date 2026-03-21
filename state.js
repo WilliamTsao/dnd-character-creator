@@ -93,3 +93,76 @@ function setRace(value) {
 
   persistState();
 }
+
+function setOccupation(value) {
+  resetOccupationSideEffects();
+  characterState.occupation = value;
+  characterState.branch = '';
+  characterState.branch_element = '';
+  characterState.team = '';
+  characterState.faith = '';
+
+  const occupationInput = document.getElementById('occupation');
+  occupationInput.value = value;
+
+  const occEN = occupationCnToEn[value];
+  const occupation = occupationsMetadata[occEN];
+
+  if (occupation.restrictions?.team) {
+    document.querySelectorAll('.team-dialog-tile-container .tile').forEach(tile => {
+      tile.style.display = occupation.restrictions.team.find(k => tile.classList.contains(k)) ? 'flex' : 'none';
+    });
+  }
+
+  setOccupationAttributes(occupation.attributes);
+
+  const hpGrowth = occupation.basics.find(({key}) => key === '生命成长').intValue;
+  document.getElementById('hp-growth').value = hpGrowth;
+
+  setAbilities(occupation.abilities);
+  persistState();
+}
+
+function setBranch(value, element) {
+  resetOccupationSideEffects();
+  characterState.branch = value;
+  characterState.branch_element = element || '';
+  characterState.team = '';
+  characterState.faith = '';
+
+  const occEN = occupationCnToEn[characterState.occupation];
+  const occupation = occupationsMetadata[occEN];
+  document.getElementById('occupation').value = `${characterState.occupation}(${element || value})`;
+
+  const branch = occupation.branches.find(b => b.value === value);
+  if (!branch) return;
+
+  if (branch.restrictions) {
+    if (branch.restrictions.faith) {
+      const faithInput = document.getElementById('faith');
+      characterState.faith = deityMetadata[branch.restrictions.faith].name;
+      faithInput.value = characterState.faith;
+      faithInput.disabled = true;
+      faithInput.parentElement.classList.add('disabled');
+      faithInput.classList.add('locked');
+    }
+    if (branch.restrictions.team) {
+      document.querySelectorAll('.team-dialog-tile-container .tile').forEach(tile => {
+        tile.style.display = branch.restrictions.team.find(k => tile.classList.contains(k)) ? 'flex' : 'none';
+      });
+    }
+  }
+
+  setOccupationAttributes(branch.attributes, element);
+
+  const hpGrowth = occupation.basics.find(({key}) => key === '生命成长').intValue;
+  document.getElementById('hp-growth').value = hpGrowth;
+
+  setAbilities(occupation.abilities);
+
+  if (occEN === 'wizard') {
+    createSpellDialog(spells);
+  }
+
+  persistState();
+}

@@ -1375,36 +1375,8 @@ function createOccupationOptions(availableOccupations, occupationInput) {
   occupationOptions.querySelectorAll('button.select-occupation').forEach((btn) => {
     btn.addEventListener('click', (evt) => {
       closeDialog();
-      if (evt.target.dataset.value === occupationInput.value) {
-        return;
-      }
-      resetOccupationSideEffects();
-      occupationInput.value = evt.target.dataset.value;
-      const occupation = occupationsMetadata[occupationCnToEn[evt.target.dataset.value]];
-      if (occupation.restrictions) {
-        Object.keys(occupation.restrictions).forEach((key) => {
-          const input = document.querySelector(`input#${key}`);
-          switch (key) {
-            case 'team':
-              input.value = '';
-              document.querySelectorAll('.team-dialog-tile-container .tile').forEach((teamTile) => {
-                if (occupation.restrictions[key].find((k) => teamTile.classList.contains(k))) {
-                  teamTile.style.display = 'flex';
-                } else {
-                  teamTile.style.display = 'none';
-                }
-              });
-              break;
-          }
-        });
-      }
-
-      setOccupationAttributes(occupation.attributes);
-
-      const hpGrowth = occupation.basics.find(({key}) => key === '生命成长').intValue;
-      document.querySelector('input#hp-growth').value = hpGrowth;
-
-      setAbilities(occupation.abilities);
+      if (evt.target.dataset.value === occupationInput.value) return;
+      setOccupation(evt.target.dataset.value);
     });
   });
 
@@ -1465,47 +1437,10 @@ function openBranchSelection(occupationCN, occupationInput) {
     btn.addEventListener('click', (evt) => {
       closeDialog();
       const selectValue = evt.target.parentElement.querySelector('#branch-subselect')?.value;
-      const newValue = `${occupationCN}(${selectValue ? selectValue : evt.target.dataset.value})`
-      if (newValue === occupationInput.value) {
-        return;
-      }
-      resetOccupationSideEffects();
-      occupationInput.value = newValue;
-      const branch = branches[evt.target.dataset.index];
-      if (branch.restrictions) {
-        Object.keys(branch.restrictions).forEach((key) => {
-          const input = document.querySelector(`input#${key}`);
-          switch (key) {
-            case 'faith':
-              input.value = deityMetadata[branch.restrictions[key]].name;
-              input.disabled = true;
-              input.parentElement.classList.add('disabled');
-              input.classList.add('locked');
-              break;
-            case 'team':
-              document.querySelectorAll('.team-dialog-tile-container .tile').forEach((teamTile) => {
-                if (branch.restrictions[key].find((k) => teamTile.classList.contains(k))) {
-                  teamTile.style.display = 'flex';
-                } else {
-                  teamTile.style.display = 'none';
-                }
-              });
-              break;
-          }
-        });
-      }
-
-      setOccupationAttributes(branch.attributes, selectValue);
-
-      const hpGrowth = occupation.basics.find(({key}) => key === '生命成长').intValue;
-      document.querySelector('input#hp-growth').value = hpGrowth;
-
-      setAbilities(occupation.abilities);
-
-      if (occupationEN === 'wizard') {
-        // TODO: other occupations with spells
-        createSpellDialog(spells);
-      }
+      const branchValue = evt.target.dataset.value;
+      const newDisplay = `${occupationCN}(${selectValue || branchValue})`;
+      if (newDisplay === occupationInput.value) return;
+      setBranch(branchValue, selectValue || undefined);
     });
   });
   branchOptionsContainer.appendChild(tileContainer);

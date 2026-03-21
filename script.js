@@ -1207,13 +1207,12 @@ dialogContents.forEach((dialogContent) => {
       const input = document.querySelector(`input#${category}`);
       if (input.value === e.target.dataset.value) return;
 
-      input.value = e.target.dataset.value;
-      if (category === 'race') {
-        setRace(e.target.dataset.value);
-      }
-
-      if (category === 'team') {
-        setTeam(e.target.dataset.value);
+      const value = e.target.dataset.value;
+      switch (category) {
+        case 'race': setRace(value); break;
+        case 'team': setTeam(value); break;
+        case 'bloodline': setBloodline(value); break;
+        default: input.value = value;
       }
     });
   });

@@ -194,3 +194,9 @@ function setFaith(value) {
   document.getElementById('faith').value = value;
   persistState();
 }
+
+function setBloodline(value) {
+  characterState.bloodline = value;
+  document.getElementById('bloodline').value = value;
+  persistState();
+}

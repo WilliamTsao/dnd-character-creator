@@ -200,3 +200,22 @@ function setBloodline(value) {
   document.getElementById('bloodline').value = value;
   persistState();
 }
+
+function setSpell(tier, index, spellName) {
+  characterState.spells[`${tier}_${index}`] = spellName;
+
+  const spell = spells.find(s => s.name === spellName);
+  if (!spell) return;
+
+  const slot = document.querySelector(`.page5 .spell-tier[data-index="${tier}"] .spell[data-index="${index}"]`);
+  if (!slot) return;
+
+  slot.querySelector('#spell-name').value = spell.name;
+  slot.querySelector('.effect-text').innerText = spell.durration ? `${spell.effect}。持续时间：${spell.durration}` : spell.effect;
+  slot.querySelector('#spell-ingrediants').value = spell.material;
+  slot.querySelector('#spell-distance').value = spell.distance;
+  slot.querySelector('#primary').checked = !!spell.action.isPrimary;
+  slot.querySelector('#secondary').checked = !spell.action.isPrimary;
+
+  persistState();
+}

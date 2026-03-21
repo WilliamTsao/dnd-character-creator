@@ -1616,19 +1616,9 @@ function createSpellDialog(spells) {
 
   container.querySelectorAll('button').forEach((button) => {
     button.onclick = (e) => {
-      const index = parseInt(e.target.dataset.value);
-      const spell = spells[index];
+      const spell = spells[parseInt(e.target.dataset.value)];
       const {spellIndex, spellTier} = document.querySelector('#spell-name-dialog').dataset;
-      const spellSlot = document.querySelector(`.page5 .spell-tier[data-index="${spellTier}"] .spell[data-index="${spellIndex}"]`);
-      spellSlot.querySelector('#spell-name').value = spell.name;
-      spellSlot.querySelector('.effect-text').innerText = spell.durration ? `${spell.effect}。持续时间：${spell.durration}` : spell.effect;
-      spellSlot.querySelector('#spell-ingrediants').value = spell.material;
-      spellSlot.querySelector('#spell-distance').value = spell.distance;
-      if (spell.action.isPrimary) {
-        spellSlot.querySelector('#primary').checked = true;
-      } else {
-        spellSlot.querySelector('#secondary').checked = true;
-      }
+      setSpell(spellTier, spellIndex, spell.name);
       closeDialog();
     }
   });

@@ -1359,6 +1359,11 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
   });
 });
 
+// Sync simple inputs → state
+['character_name', 'age', 'height', 'weight', 'skin_color', 'eye_color', 'hair_color', 'player_name'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => updateState(id, e.target.value));
+});
+
 function closeDialog() {
   dialog.scrollTop = 0;
   dialog.style.display = 'none';

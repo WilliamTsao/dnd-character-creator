@@ -35,6 +35,7 @@ function updateState(key, value) {
 }
 
 function setRace(value) {
+  const previousRace = characterState.race;
   characterState.race = value;
   const race = raceCnToEn[value];
   const raceStats = statsByRace[race];
@@ -70,6 +71,8 @@ function setRace(value) {
     characterState.branch_element = '';
     occupationInput.value = '';
     resetOccupationSideEffects();
+    returnToOccupationOptions();
+  } else if (previousRace === '赫利凡') {
     returnToOccupationOptions();
   } else if (typeof occupationsMetadata[currentOcc].attributes === 'function') {
     setOccupationAttributes(occupationsMetadata[currentOcc].attributes);

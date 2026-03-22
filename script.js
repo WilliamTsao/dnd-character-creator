@@ -1246,6 +1246,7 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
     }
     // Clamp the value between min and max
     el.value = Math.min(Math.max(el.value, el.min), el.max);
+    if (el.id in characterState) updateState(el.id, el.value);
   });
 });
 

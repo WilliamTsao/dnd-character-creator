@@ -1,4 +1,9 @@
 // ── Single source of truth ──
+const SIMPLE_FIELDS = [
+  'character_name', 'age', 'height', 'weight',
+  'skin_color', 'eye_color', 'hair_color', 'player_name'
+];
+
 const characterState = {
   character_name: '',
   race: '',
@@ -216,6 +221,84 @@ function setSpell(tier, index, spellName) {
   slot.querySelector('#spell-distance').value = spell.distance;
   slot.querySelector('#primary').checked = !!spell.action.isPrimary;
   slot.querySelector('#secondary').checked = !spell.action.isPrimary;
+
+  persistState();
+}
+
+// ── Export ──
+document.getElementById('export-btn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(characterState, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${characterState.character_name || 'character'}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+// ── Import ──
+const importFile = document.getElementById('import-file');
+document.getElementById('import-btn').addEventListener('click', () => importFile.click());
+importFile.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    try {
+      loadState(JSON.parse(evt.target.result));
+    } catch(err) {
+      alert('无法读取文件');
+    }
+  };
+  reader.readAsText(file);
+  importFile.value = '';
+});
+
+// ── Load from localStorage on page load ──
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('dnd-character');
+  if (saved) {
+    try { loadState(JSON.parse(saved)); } catch(e) {}
+  }
+});
+
+// ── Apply a full state object (used by import and localStorage) ──
+function loadState(data) {
+  // Cascading fields in dependency order
+  if (data.race) setRace(data.race);
+  if (data.occupation) setOccupation(data.occupation);
+  if (data.branch) setBranch(data.branch, data.branch_element || undefined);
+  if (data.team) setTeam(data.team);
+  if (data.faith && !document.getElementById('faith').classList.contains('locked')) {
+    setFaith(data.faith);
+  }
+  if (data.bloodline) setBloodline(data.bloodline);
+
+  // Simple fields
+  SIMPLE_FIELDS.forEach(id => {
+    if (data[id] != null) {
+      characterState[id] = data[id];
+      document.getElementById(id).value = data[id];
+    }
+  });
+
+  // Skills
+  if (data.skills) {
+    Object.entries(data.skills).forEach(([id, checked]) => {
+      const cb = document.getElementById(id);
+      if (cb && !cb.disabled && checked) {
+        cb.checked = true;
+        cb.dispatchEvent(new Event('change'));
+      }
+    });
+  }
+
+  // Spells
+  if (data.spells) {
+    Object.entries(data.spells).forEach(([key, name]) => {
+      const [tier, index] = key.split('_');
+      setSpell(tier, index, name);
+    });
+  }
 
   persistState();
 }

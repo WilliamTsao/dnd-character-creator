@@ -128,16 +128,17 @@ function setOccupation(value) {
   persistState();
 }
 
-function setBranch(value, element) {
+function setBranch(occupationCN, value, element) {
   resetOccupationSideEffects();
+  characterState.occupation = occupationCN;
   characterState.branch = value;
   characterState.branch_element = element || '';
   characterState.team = '';
   characterState.faith = '';
 
-  const occEN = occupationCnToEn[characterState.occupation];
+  const occEN = occupationCnToEn[occupationCN];
   const occupation = occupationsMetadata[occEN];
-  document.getElementById('occupation').value = `${characterState.occupation}(${element || value})`;
+  document.getElementById('occupation').value = `${occupationCN}(${element || value})`;
 
   const branch = occupation.branches.find(b => b.value === value);
   if (!branch) return;
@@ -265,8 +266,11 @@ window.addEventListener('DOMContentLoaded', () => {
 function loadState(data) {
   // Cascading fields in dependency order
   if (data.race) setRace(data.race);
-  if (data.occupation) setOccupation(data.occupation);
-  if (data.branch) setBranch(data.branch, data.branch_element || undefined);
+  if (data.branch) {
+    setBranch(data.occupation, data.branch, data.branch_element || undefined);
+  } else if (data.occupation) {
+    setOccupation(data.occupation);
+  }
   if (data.team) setTeam(data.team);
   if (data.faith && !document.getElementById('faith').classList.contains('locked')) {
     setFaith(data.faith);

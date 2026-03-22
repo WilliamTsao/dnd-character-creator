@@ -1403,7 +1403,7 @@ function openBranchSelection(occupationCN, occupationInput) {
       const branchValue = evt.target.dataset.value;
       const newDisplay = `${occupationCN}(${selectValue || branchValue})`;
       if (newDisplay === occupationInput.value) return;
-      setBranch(branchValue, selectValue || undefined);
+      setBranch(occupationCN, branchValue, selectValue || undefined);
     });
   });
   branchOptionsContainer.appendChild(tileContainer);

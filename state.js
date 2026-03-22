@@ -64,7 +64,7 @@ function setRace(value) {
   occupationInput.placeholder = '选择';
   occupationInput.parentElement.classList.remove('disabled');
   const currentOcc = occupationCnToEn[characterState.occupation];
-  if (!currentOcc || !raceStats.occupations.includes(currentOcc)) {
+  if (!currentOcc || !raceStats.occupations.includes(currentOcc) || (currentOcc === 'cleric' && value === '赫利凡')) {
     characterState.occupation = '';
     characterState.branch = '';
     characterState.branch_element = '';

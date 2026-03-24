@@ -393,6 +393,19 @@ input[type="checkbox"]:checked:disabled {
   border-color: #a0a0a0;
 }
 
+.page4 .checkbox {
+  display: flex;
+  background: white;
+  gap: 4px;
+  font-size: 16px;
+}
+
+.page4 .checkbox span {
+  width: 33px;
+  height: 52%;
+  border-bottom: 1px dotted #999;
+}
+
 .page4 .top {
   position: relative;
   height: 30%;
@@ -456,20 +469,21 @@ input[type="checkbox"]:checked:disabled {
   width: 30%;
 }
 
-.page4 .bottom-left input[type=checkbox] {
-  margin-bottom: 15.3px;
+.page4 .bottom-left .checkbox {
+    align-items: center;
+    height: 28px;
 }
 
 .page4 .bottom-left .learning {
   position: absolute;
-  top: 8.3%;
+  top: 7%;
   left: 31.2%;
   display: grid;
 }
 
 .page4 .bottom-left .knowledge {
   position: absolute;
-  top: 28.6%;
+  top: 28.4%;
   left: 31.2%;
   display: grid;
 }

@@ -230,11 +230,24 @@ function setSpell(tier, index, spellName) {
 }
 
 // ── Export ──
-document.getElementById('export-btn').addEventListener('click', () => {
+document.getElementById('export-btn').addEventListener('click', async () => {
+  const filename = `${characterState.character_name || 'character'}.json`;
   const blob = new Blob([JSON.stringify(characterState, null, 2)], { type: 'application/json' });
+  const file = new File([blob], filename, { type: 'application/json' });
+
+  if (navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: filename });
+      return;
+    } catch(e) {
+      if (e.name === 'AbortError') return; // user cancelled
+    }
+  }
+
+  // Fallback: download
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `${characterState.character_name || 'character'}.json`;
+  a.download = filename;
   a.click();
   URL.revokeObjectURL(a.href);
 });

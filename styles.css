@@ -554,7 +554,13 @@ input[type="checkbox"]:checked:disabled {
   border-radius: 0 0 0 38px;
 }
 
+.page5 .spell-tier .interaction-cover {
+  position: absolute;
+  inset: 0;
+}
+
 .page5 .spell {
+  position: relative;
   width: 25%;
   height: 100%;
 }
@@ -616,7 +622,6 @@ input[type="checkbox"]:checked:disabled {
   line-height: 15px;
   font-size: 12px;
   text-indent: 34px;
-  text-decoration: dotted underline #999;
   background-color: white;
 }
 
@@ -658,6 +663,16 @@ input[type="checkbox"]:checked:disabled {
 
 .page5 .spell .distance input {
   width: 20px;
+}
+
+.page5 .spell .interaction-cover {
+  position: absolute;
+  inset: -5px;
+}
+
+.page6 .interaction-cover {
+  position: absolute;
+  inset: 0;
 }
 
 /* Dialog */
@@ -864,6 +879,18 @@ body.dialog-opened #dialog-backdrop {
   padding: 10px;
 }
 
+#spell-name-dialog .spell-options-tile-container .tile {
+  display: none;
+}
+
+#spell-name-dialog[data-spell-tier="0"] .spell-options-tile-container .tile[data-tier="0"] {
+  display: flex;
+}
+
+#spell-name-dialog[data-spell-tier="1"] .spell-options-tile-container .tile[data-tier="1"] {
+  display: flex;
+}
+
 #occupation-dialog .tile,
 #team-dialog .tile,
 #spell-name-dialog .tile {
@@ -974,8 +1001,9 @@ body.dialog-opened #dialog-backdrop {
 }
 .toolbar button {
   width: 80px;
-  height: 40px;
+  height: 44px;
   font-size: 16px;
+  touch-action: manipulation;
 }
 
 @media print {

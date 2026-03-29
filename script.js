@@ -1,3 +1,9 @@
+// ── Single source of truth ──
+const SIMPLE_FIELDS = [
+  'character_name', 'age', 'height', 'weight',
+  'skin_color', 'eye_color', 'hair_color', 'player_name'
+];
+
 const raceCnToEn = {
   '人类': 'human',
   '精灵': 'elf',
@@ -644,7 +650,8 @@ const occupationsMetadata = {
       {key: "知识类", value: "已知所有知识", selectableCount: 0, selected: ['*']},
       {key: "表演类", value: "无", selectableCount: 0},
       {key: "升级熟练点", value: "5+智力调整值"},
-    ]
+    ],
+    spellLimits: [3, 1]
   },
   sorcerer: {
     description: ['与法师不同，术士是天生的施法者，法师们渴求探索魔法以及宇宙万物的真谛，而术士则视魔法为艺术，而非科学。', '据说他们强大的魔法能量源自自身体内古老的血脉，一名合格的术士需要经得住时间的考验，岁月的打磨，才能激发出自身那股即狂野又纯粹的能量。术士是擅长频繁施法的战斗施法者，不同的血脉会带给术士不同的力量。'],
@@ -718,7 +725,8 @@ const occupationsMetadata = {
       {key: "知识类", value: "神秘、魔法、自选一项", selectableCount: 1, selected: ['神秘', '魔法']},
       {key: "表演类", value: "无", selectableCount: 0},
       {key: "升级熟练点", value: "3+智力调整值"},
-    ]
+    ],
+    spellLimits: [0, 1]
   },
   druid: {
     description: ['在远离城市的文明与喧嚣的自然中有着一股强大的原始力量。他们称之自己为德鲁伊。作为狂野魔法的施法者，当狂野魔法在这片大陆肆意生长时，他们选择了回归淳朴的自然中，默默地守护自然，维持着自然与生态的平衡。因为他们深知自己诞生的那一刻无论是拥有的元素魔法还是与野兽作伴能力亦或是化身为野兽保护家园的能力无一不来源于他们热爱、敬畏而又世代守护的自然。', '随着人类文明逐渐的发展，或许许多人早已经忘却了与自然相处的方式，但他们肆意开拓时总会有些忠诚于自然的德鲁伊们狂热的守护这片土地的一山一河，一草一木。'],
@@ -791,7 +799,8 @@ const occupationsMetadata = {
       {key: "知识类", value: "自然、医疗、自选三项", selectableCount: 3, selected: ['自然', '医疗']},
       {key: "表演类", value: "自选一项", selectableCount: 1},
       {key: "升级熟练点", value: "4+智力调整值"},
-    ]
+    ],
+    spellLimits: [3, 1]
   },
   monk: {
     description: ['作为大陆上最晚被发现而又自成体系一个职业，武僧往往高深莫测。他们代表了肉体的磨练于精神的苦修。曾经被人划为了极度危险的异教徒收到了一众神明信徒的打压。致使他们不得不隐退至人烟稀少的地方。', '但是对于他们来说，外界的世俗只是精神与肉体磨练也是修成正果的阶梯。这些外放于拳腿，举戈而舞。内敛于丹田，凝神自安的武僧们也为遥远的东方大陆披上了一层神秘的面纱。'],
@@ -1014,152 +1023,210 @@ const statsByRace = {
 };
 
 const spells = [
-  {
-    name: "秘法印记（变化）",
-    effect: "在物体上标记自己的个人印记/符号（可见/不可见）",
-    action: {
-      isPrimary: true,
-      meta: "单手，咒语"
+  [
+    {
+      name: "秘法印记（变化）",
+      effect: "在物体上标记自己的个人印记/符号（可见/不可见）",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      durration: "每等级半小时",
+      distance: "9米",
+      material: "秘法粉尘25g"
     },
-    durration: "每等级半小时",
-    distance: "9米",
-    material: "秘法粉尘25g"
-  },
-  {
-    name: "响指点燃（塑能）",
-    effect: "打一个响指点燃目标，造成1d4点火系魔法伤害",
-    action: {
-      isPrimary: true,
-      meta: "单手，咒语"
+    {
+      name: "响指点燃（塑能）",
+      effect: "打一个响指点燃目标，造成1d4点火系魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      durration: "1D4回合",
+      distance: "6米",
+      material: "木炭1根"
     },
-    durration: "1D4回合",
-    distance: "6米",
-    material: "木炭1根"
-  },
-  {
-    name: "冰球（塑能）",
-    effect: "对9m内的单体目标发射冰球，造成1d6+智力调整值的冰系魔法伤害",
-    action: {
-      isPrimary: true,
-      meta: "双手"
+    {
+      name: "冰球（塑能）",
+      effect: "对9m内的单体目标发射冰球，造成1d6+智力调整值的冰系魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      durration: "立即",
+      distance: "9米",
+      material: "水100ml"
     },
-    durration: "立即",
-    distance: "9米",
-    material: "水100ml"
-  },
-  {
-    name: "电爪（塑能）",
-    effect: "在手中凝聚一个电击能最束，对1.5m的一个目标造成1d8点雷系廣法伤害",
-    action: {
-      isPrimary: true,
-      meta: "单手，咒语"
+    {
+      name: "电爪（塑能）",
+      effect: "在手中凝聚一个电击能量束，对1.5m的一个目标造成1d8点雷系魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      durration: "立即",
+      distance: "1.5米",
+      material: "雷击木1根"
     },
-    durration: "立即",
-    distance: "1.5米",
-    material: "雷击木1根"
-  },
-  {
-    name: "法师之手（咒法）",
-    effect: "可远距离移动每等级2公斤的非魔法无主物品",
-    action: {
-      isPrimary: true,
-      meta: "单手"
+    {
+      name: "法师之手（咒法）",
+      effect: "可远距离移动每等级2公斤的非魔法无主物品",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      durration: "1d4+1/2等级分钟",
+      distance: "9米",
+      material: "秘法粉尘25g"
     },
-    durration: "1d4+1/2等级分钟",
-    distance: "9米",
-    material: "秘法粉尘25g"
-  },
-  {
-    name: "剑刃爆发（咒法）",
-    effect: "制造一个咒法半透明剑刃对周围1.5m内横扫。1.5m内目标进行敏捷豁免失败则受到1d6点伤害",
-    action: {
-      isPrimary: true,
-      meta: "双手"
+    {
+      name: "剑刃爆发（咒法）",
+      effect: "制造一个咒法半透明剑刃对周围1.5m内横扫。1.5m内目标进行敏捷豁免失败则受到1d6点伤害",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "1.5米",
+      material: "金属粉尘25g"
     },
-    distance: "1.5米",
-    material: "金属粉尘25g"
-  },
-  {
-    name: "毒气喷溅（咒法）",
-    effect: "对一个目标喷射霉气，目标需要进行一个体质豁免，失败则受到1d10点毒素伤害。",
-    action: {
-      isPrimary: true,
-      meta: "双手"
+    {
+      name: "毒气喷溅（咒法）",
+      effect: "对一个目标喷射霉气，目标需要进行一个体质豁免，失败则受到1d10点毒素伤害",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "3米",
+      material: "任何具备 素的物品25g以上。"
     },
-    distance: "3米",
-    material: "任何具备 素的物品25g以上。"
-  },
-  {
-    name: "侦测毒性（防护）",
-    effect: "侦測一个生物或物体上是否有落性",
-    action: {
-      isPrimary: true,
-      meta: "咒语"
+    {
+      name: "侦测毒性（防护）",
+      effect: "侦測一个生物或物体上是否有落性",
+      action: {
+        isPrimary: true,
+        meta: "咒语"
+      },
+      distance: "3米",
+      material: "无"
     },
-    distance: "3米",
-    material: "无"
-  },
-  {
-    name: "禁光术（防护）",
-    effect: "产生1x1格黑暗区域，普通光源无法照亮。",
-    action: {
-      isPrimary: true,
-      meta: "双手，咒语"
+    {
+      name: "禁光术（防护）",
+      effect: "产生1x1格黑暗区域，普通光源无法照亮",
+      action: {
+        isPrimary: true,
+        meta: "双手，咒语"
+      },
+      distance: "6米",
+      material: "夜娥翅1个"
     },
-    distance: "6米",
-    material: "夜娥翅1个"
-  },
-  {
-    name: "静寂术（防护）",
-    effect: "抵消微小的声音",
-    action: {
-      isPrimary: true,
-      meta: "双手"
+    {
+      name: "静寂术（防护）",
+      effect: "抵消微小的声音",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "触摸",
+      material: "秘法粉尘25g"
     },
-    distance: "触摸",
-    material: "秘法粉尘25g"
-  },
-  {
-    name: "闪光术（防护）",
-    effect: "在一单个生物前爆发出光亮.使他目眩，命中-1、闪避-1",
-    action: {
-      isPrimary: true,
-      meta: "单手"
+    {
+      name: "闪光术（防护）",
+      effect: "在一单个生物前爆发出光亮.使他目眩，命中-1、闪避-1",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      durration: "1d4-1回合",
+      distance: "6米",
+      material: "萤火虫1只"
     },
-    durration: "1d4-1回合",
-    distance: "6米",
-    material: "萤火虫1只"
-  },
-  {
-    name: "传讯术（变化）",
-    effect: "对一个目标远距离传声，对方可拒绝",
-    action: {
-      isPrimary: true,
-      meta: "咒语"
+    {
+      name: "传讯术（变化）",
+      effect: "对一个目标远距离传声，对方可拒绝",
+      action: {
+        isPrimary: true,
+        meta: "咒语"
+      },
+      distance: "20米",
+      material: "无"
     },
-    distance: "20米",
-    material: "无"
-  },
-  {
-    name: "光亮术（变化）",
-    effect: "使一个物体如火炬般发光，照亮周围6米环境。",
-    action: {
-      isPrimary: true,
-      meta: "双手，咒语"
+    {
+      name: "光亮术（变化）",
+      effect: "使一个物体如火炬般发光，照亮周围6米环境",
+      action: {
+        isPrimary: true,
+        meta: "双手，咒语"
+      },
+      distance: "触摸",
+      material: "闪光粉10g"
     },
-    distance: "触摸",
-    material: "闪光粉10g"
-  },
-  {
-    name: "修复术（变化）",
-    effect: "修理一个轻微破损的物件",
-    action: {
-      isPrimary: true,
-      meta: "单手"
+    {
+      name: "修复术（变化）",
+      effect: "修理一个轻微破损的物件",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "接触",
+      material: "磁石*1"
     },
-    distance: "接触",
-    material: "磁石*1"
-  },
+  ],
+  [
+    {
+      name: "通晓语言（愛化）",
+      effect: "施放后可以听懂一个自己不会的语宫，但是并不会说出、写下该语言",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "触及",
+      durration: "1h",
+      material: "秘法粉尘10g"
+    },
+    {
+      name: "火焰箭（塑能）",
+      effect: "对单体目标造成1d6+智力调整值的火焰魔法伤害、并附着点燃效果",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "9m",
+      durration: "1d4回合",
+      material: "火焙粉尘25g"
+    },
+    {
+      name: "冰锥术（塑能）",
+      effect: "对单体目标造成1d8+智力调整值的冰冻魔法伤害，并减少其3m移动速度",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "9m",
+      durration: "持续1d4回合",
+      material: "冰块100g"
+    },
+    {
+      name: "雷击术（塑能）",
+      effect: "对单体目标造成1d12+智调的雷电魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "9m",
+      material: "雷电粉尘25g"
+    },
+    {
+      name: "魔毯术（咒法）",
+      effect: "创造一个1.5m*3m的平面魔毯，可负载20公斤/等级重量，可以浮空不超过3m，施法者可以控制廣毯以3m/回合的速度移动。超重或离开施法者15米后消失",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "3m",
+      durration: "1h/等级",
+      material: "一张毯子"
+    },
+  ]
 ];
 
 const fileInput = document.getElementById('file-upload');
@@ -1597,11 +1664,18 @@ function setAbilities(abilities) {
   });
 }
 
-function createSpellDialog(spells) {
+function createSpellDialog(allSpells) {
+  const spells = [];
+  allSpells.forEach((spellsInTier, tier) => {
+    spellsInTier.forEach((spell) => {
+      spells.push({...spell, tier});
+    });
+  });
+
   const container = document.querySelector('#spell-name-dialog .spell-options-tile-container');
   container.innerHTML = spells.map((spell, index) => {
     return `
-      <div class="tile">
+      <div class="tile" data-tier=${spell.tier}>
         <h4>${spell.name}</h4>
         <p>
           <b>效果：</b>${spell.effect}<br/>
@@ -1617,6 +1691,7 @@ function createSpellDialog(spells) {
 
   container.querySelectorAll('button').forEach((button) => {
     button.onclick = (e) => {
+      debugger;
       const spell = spells[parseInt(e.target.dataset.value)];
       const {spellIndex, spellTier} = document.querySelector('#spell-name-dialog').dataset;
       setSpell(spellTier, spellIndex, spell.name);

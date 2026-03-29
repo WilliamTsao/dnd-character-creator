@@ -1,9 +1,3 @@
-// ── Single source of truth ──
-const SIMPLE_FIELDS = [
-  'character_name', 'age', 'height', 'weight',
-  'skin_color', 'eye_color', 'hair_color', 'player_name'
-];
-
 const characterState = {
   character_name: '',
   race: '',
@@ -169,8 +163,26 @@ function setBranch(occupationCN, value, element) {
 
   setAbilities(occupation.abilities);
 
-  if (occEN === 'wizard') {
-    createSpellDialog(spells);
+  if (
+    occEN === 'wizard' ||
+    occEN === 'sorcerer' ||
+    occEN === 'druid'
+  ) {
+    const limits = occupation.spellLimits;
+    limits.forEach((limit, i) => {
+      const tier = document.querySelector(`.spell-tier[data-index="${i}"]`);
+      for (let j = 0; j < limit; j++) {
+        const spell = tier.querySelector(`.spell[data-index="${j}"]`);
+        spell.querySelector('input#spell-name').removeAttribute('disabled');
+        spell.querySelector('.interaction-cover').style.display = 'none';
+      }
+    });
+
+    if (occEN === 'druid') {
+      // createSpellDialog(druidSpells);
+    } else {
+      createSpellDialog(spells);
+    }
   }
 
   persistState();
@@ -213,7 +225,7 @@ function setBloodline(value) {
 function setSpell(tier, index, spellName) {
   characterState.spells[`${tier}_${index}`] = spellName;
 
-  const spell = spells.find(s => s.name === spellName);
+  const spell = spells[tier].find(s => s.name === spellName);
   if (!spell) return;
 
   const slot = document.querySelector(`.page5 .spell-tier[data-index="${tier}"] .spell[data-index="${index}"]`);
@@ -232,24 +244,29 @@ function setSpell(tier, index, spellName) {
 // ── Export ──
 document.getElementById('export-btn').addEventListener('click', async () => {
   const filename = `${characterState.character_name || 'character'}.json`;
-  const blob = new Blob([JSON.stringify(characterState, null, 2)], { type: 'application/json' });
-  const file = new File([blob], filename, { type: 'application/json' });
+  const json = JSON.stringify(characterState, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
 
-  if (navigator.canShare?.({ files: [file] })) {
-    try {
+  // Try Web Share API (mobile)
+  try {
+    const file = new File([blob], filename, { type: 'application/json' });
+    if (navigator.canShare?.({ files: [file] })) {
       await navigator.share({ files: [file], title: filename });
       return;
-    } catch(e) {
-      if (e.name === 'AbortError') return; // user cancelled
     }
+  } catch(e) {
+    if (e.name === 'AbortError') return;
   }
 
   // Fallback: download
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  a.href = url;
   a.download = filename;
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 
 // ── Import ──

@@ -267,6 +267,12 @@ document.getElementById('export-btn').addEventListener('click', async () => {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+  // Last resort for in-app browsers that block downloads
+  setTimeout(() => {
+    if (!document.hasFocus()) return;
+    window.open('data:application/json;charset=utf-8,' + encodeURIComponent(json));
+  }, 1500);
 });
 
 // ── Import ──

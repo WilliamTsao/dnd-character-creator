@@ -1026,7 +1026,7 @@ const spells = [
   [
     {
       name: "秘法印记（变化）",
-      effect: "在物体上标记自己的个人印记/符号（可见/不可见）",
+      effect: "在物体上标记自己的个人印记/符号(可见/不可见)",
       action: {
         isPrimary: true,
         meta: "单手，咒语"
@@ -1042,7 +1042,7 @@ const spells = [
         isPrimary: true,
         meta: "单手，咒语"
       },
-      durration: "1D4回合",
+      durration: "1d4回合",
       distance: "6米",
       material: "木炭1根"
     },
@@ -1064,7 +1064,6 @@ const spells = [
         isPrimary: true,
         meta: "单手，咒语"
       },
-      durration: "立即",
       distance: "1.5米",
       material: "雷击木1根"
     },
@@ -1075,13 +1074,13 @@ const spells = [
         isPrimary: true,
         meta: "单手"
       },
-      durration: "1d4+1/2等级分钟",
+      durration: "1d4+1/2等级 分钟",
       distance: "9米",
       material: "秘法粉尘25g"
     },
     {
       name: "剑刃爆发（咒法）",
-      effect: "制造一个咒法半透明剑刃对周围1.5m内横扫。1.5m内目标进行敏捷豁免失败则受到1d6点伤害",
+      effect: "制造一个咒法形成的半透明剑刃对周围1.5m内横扫。1.5m内目标进行敏捷豁免失败则受到1d6点伤害",
       action: {
         isPrimary: true,
         meta: "双手"
@@ -1091,17 +1090,17 @@ const spells = [
     },
     {
       name: "毒气喷溅（咒法）",
-      effect: "对一个目标喷射霉气，目标需要进行一个体质豁免，失败则受到1d10点毒素伤害",
+      effect: "对一个目标喷射毒气，目标需要进行一个体质豁免，失败则受到1d10点毒素伤害",
       action: {
         isPrimary: true,
         meta: "双手"
       },
       distance: "3米",
-      material: "任何具备 素的物品25g以上。"
+      material: "任何具备毒素的物品25g以上"
     },
     {
       name: "侦测毒性（防护）",
-      effect: "侦測一个生物或物体上是否有落性",
+      effect: "侦测一个生物或物体上是否有毒性",
       action: {
         isPrimary: true,
         meta: "咒语"
@@ -1126,12 +1125,12 @@ const spells = [
         isPrimary: true,
         meta: "双手"
       },
-      distance: "触摸",
+      distance: "触及",
       material: "秘法粉尘25g"
     },
     {
       name: "闪光术（防护）",
-      effect: "在一单个生物前爆发出光亮.使他目眩，命中-1、闪避-1",
+      effect: "在一单个生物前爆发出光亮，使他目眩，命中-1、闪避-1",
       action: {
         isPrimary: true,
         meta: "单手"
@@ -1157,7 +1156,7 @@ const spells = [
         isPrimary: true,
         meta: "双手，咒语"
       },
-      distance: "触摸",
+      distance: "触及",
       material: "闪光粉10g"
     },
     {
@@ -1167,14 +1166,14 @@ const spells = [
         isPrimary: true,
         meta: "单手"
       },
-      distance: "接触",
+      distance: "触及",
       material: "磁石*1"
     },
   ],
   [
     {
-      name: "通晓语言（愛化）",
-      effect: "施放后可以听懂一个自己不会的语宫，但是并不会说出、写下该语言",
+      name: "通晓语言（变化）",
+      effect: "施放后可以听懂一个自己不会的语言，但是并不会说出、写下该语言",
       action: {
         isPrimary: true,
         meta: "单手"
@@ -1190,9 +1189,9 @@ const spells = [
         isPrimary: true,
         meta: "双手"
       },
-      distance: "9m",
+      distance: "9米",
       durration: "1d4回合",
-      material: "火焙粉尘25g"
+      material: "火焰粉尘25g"
     },
     {
       name: "冰锥术（塑能）",
@@ -1201,8 +1200,8 @@ const spells = [
         isPrimary: true,
         meta: "双手"
       },
-      distance: "9m",
-      durration: "持续1d4回合",
+      distance: "9米",
+      durration: "1d4回合",
       material: "冰块100g"
     },
     {
@@ -1212,19 +1211,118 @@ const spells = [
         isPrimary: true,
         meta: "双手"
       },
-      distance: "9m",
+      distance: "9米",
       material: "雷电粉尘25g"
     },
     {
       name: "魔毯术（咒法）",
-      effect: "创造一个1.5m*3m的平面魔毯，可负载20公斤/等级重量，可以浮空不超过3m，施法者可以控制廣毯以3m/回合的速度移动。超重或离开施法者15米后消失",
+      effect: "创造一个1.5m×3m的魔毯，可负载20公斤/等级，可浮空3m，移动速度:3m/回合，超重或离开施法者15米后消失",
       action: {
         isPrimary: true,
         meta: "单手"
       },
-      distance: "3m",
+      distance: "3米",
       durration: "1h/等级",
       material: "一张毯子"
+    },
+    {
+      name: "咒法召唤（咒法）",
+      effect: "定向召唤一只小型怪物，投掷1d6决定怪物类型（1、2为爬行兽，3、4为利齿鱼，5、6为尖喙鸟）",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "1.5米",
+      durration: "1h/等级",
+      material: "咒法契约画卷"
+    },
+    {
+      name: "假人替身（咒法）",
+      effect: "召唤一个不具备五感且不能动作或发声受击则消散的分身，d8决定位置，此后向该目标发动的攻击处于劣势",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "1.5米",
+      durration: "1d4-1回合",
+      material: "无"
+    },
+    {
+      name: "魔法警报（防护）",
+      effect: "在一扇门、窗、一个帐篷等物品上施放一个魔法警报。当有实体触碰到该物品时，施法者可以迅速感知到警报",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "3米",
+      durration: "12h",
+      material: "魔法丝线30m"
+    },
+    {
+      name: "羽落术（防护）",
+      effect: "使目标下落速度减缓至1.5m/回合",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "9米",
+      durration: "1/2等级分钟",
+      material: "飞禽类羽毛2支"
+    },
+    {
+      name: "护盾术（防护）",
+      effect: "为目标施放一个1d6+智力调整值的护盾",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "6米",
+      durration: "1d4回合",
+      material: "蛋壳碎片25g"
+    },
+    {
+      name: "脚底抹油（防护）",
+      effect: "使目标移动速度短暂提升6m/回合",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "6米",
+      durration: "1d4+1回合",
+      material: "兔子毛发一根"
+    },
+    {
+      name: "催眠术（变化）",
+      effect: "催眠一个目标，目标需要进行豁免，失败则进入睡眠状态",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "6米",
+      durration: "1h（当目标受到伤害时会立即苏醒）",
+      material: "魔法粉尘10g"
+    },
+    {
+      name: "粘连术（变化）",
+      effect: "使两个个体粘连在一起，需要通过力量豁免分开",
+      action: {
+        isPrimary: true,
+        meta: "双手"
+      },
+      distance: "触及",
+      durration: "立即",
+      material: "史莱姆分泌物/鼻涕虫"
+    },
+    {
+      name: "文字抹除（变化）",
+      effect: "抹除一些文字，毫无痕迹",
+      action: {
+        isPrimary: true,
+        meta: "单手"
+      },
+      distance: "触及",
+      durration: "永久",
+      material: "秘法粉尘150g"
     },
   ]
 ];

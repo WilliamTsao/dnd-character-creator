@@ -232,7 +232,7 @@ function setSpell(tier, index, spellName) {
   if (!slot) return;
 
   slot.querySelector('#spell-name').value = spell.name;
-  slot.querySelector('.effect-text').innerText = spell.durration ? `${spell.effect}。持续时间：${spell.durration}` : spell.effect;
+  slot.querySelector('.effect-text').innerText = spell.durration ? `${spell.effect}。持续：${spell.durration}` : spell.effect;
   slot.querySelector('#spell-ingrediants').value = spell.material;
   slot.querySelector('#spell-distance').value = spell.distance;
   slot.querySelector('#primary').checked = !!spell.action.isPrimary;

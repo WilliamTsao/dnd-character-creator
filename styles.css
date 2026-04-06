@@ -662,7 +662,7 @@ input[type="checkbox"]:checked:disabled {
 }
 
 .page5 .spell .distance input {
-  width: 20px;
+  width: 100px;
 }
 
 .page5 .spell .interaction-cover {

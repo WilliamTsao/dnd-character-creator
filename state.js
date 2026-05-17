@@ -98,6 +98,7 @@ function setRace(value) {
 
 function setOccupation(value) {
   resetOccupationSideEffects();
+  clearSpells();
   characterState.occupation = value;
   characterState.branch = '';
   characterState.branch_element = '';
@@ -127,6 +128,7 @@ function setOccupation(value) {
 
 function setBranch(occupationCN, value, element) {
   resetOccupationSideEffects();
+  clearSpells();
   characterState.occupation = occupationCN;
   characterState.branch = value;
   characterState.branch_element = element || '';
@@ -179,7 +181,7 @@ function setBranch(occupationCN, value, element) {
     });
 
     if (occEN === 'druid') {
-      // createSpellDialog(druidSpells);
+      createSpellDialog(druidSpells);
     } else {
       createSpellDialog(spells);
     }
@@ -222,10 +224,25 @@ function setBloodline(value) {
   persistState();
 }
 
-function setSpell(tier, index, spellName) {
+function clearSpells() {
+  characterState.spells = {};
+  document.querySelectorAll('.page5 .spell').forEach(slot => {
+    slot.querySelector('#spell-name').value = '';
+    slot.querySelector('#spell-name').setAttribute('disabled', '');
+    slot.querySelector('.effect-text').innerText = '';
+    slot.querySelector('#spell-ingrediants').value = '';
+    slot.querySelector('#spell-distance').value = '';
+    slot.querySelector('#primary').checked = false;
+    slot.querySelector('#secondary').checked = false;
+    const cover = slot.querySelector('.interaction-cover');
+    if (cover) cover.style.display = '';
+  });
+}
+
+function setSpell(tier, index, spellName, allSpells) {
   characterState.spells[`${tier}_${index}`] = spellName;
 
-  const spell = spells[tier].find(s => s.name === spellName);
+  const spell = allSpells[tier].find(s => s.name === spellName);
   if (!spell) return;
 
   const slot = document.querySelector(`.page5 .spell-tier[data-index="${tier}"] .spell[data-index="${index}"]`);
@@ -337,9 +354,12 @@ function loadState(data) {
 
   // Spells
   if (data.spells) {
+    const occEN = occupationCnToEn[data.occupation];
+    const allSpells = occEN === 'druid' ? druidSpells : spells;
+
     Object.entries(data.spells).forEach(([key, name]) => {
       const [tier, index] = key.split('_');
-      setSpell(tier, index, name);
+      setSpell(tier, index, name, allSpells);
     });
   }
 

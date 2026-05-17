@@ -1327,6 +1327,189 @@ const spells = [
   ]
 ];
 
+const druidSpells = [
+  [
+    {
+      name: "制造微风（风）",
+      effect: "可以制造一阵微风，吹走极小的生物和气体。元素增强：製造小风环境",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      durration: "1d4回合",
+      distance: "9米",
+      material: "风信子一株"
+    },
+    {
+      name: "舞风（风）",
+      effect: "可以改变微风的风向。元素增强：可以细致的改变小风的每一处风向",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      durration: "1d4回合",
+      distance: "9米",
+      material: "微风的目然环埃"
+    },
+    {
+      name: "魔化石子（土）",
+      effect: "打出1d4-1顆石子毎回合每顆石子造成1d4点魔法伤害。元素增强：打出石子+1，每颗伤害+感知调整值",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      durration: "1min",
+      distance: "6米",
+      material: "自然的石子"
+    },
+    {
+      name: "塑土（土）",
+      effect: "将岩石表面或土壤塑造成图案或文字。元素增强：造成精细的图案或文字",
+      action: {
+        isPrimary: true,
+        meta: "单手，咒语"
+      },
+      distance: "触摸",
+      material: "自然的岩石或土壤"
+    },
+    {
+      name: "快速生长（植物）",
+      effect: "让植物以肉眼可见的速度生长（1cm/分钟）。元素增强：生长速度为2cm/等级/分钟",
+      action: {
+        isPrimary: true,
+      },
+      durration: "立即",
+      distance: "触摸",
+      material: "自然环境"
+    },
+    {
+      name: "水果爆弹（植物）",
+      effect: "在水果中注入狂野魔法，投中第1个目标后向周围十字爆炸。造成1d4/6/8+感调的狂魔伤害。元素增强：1d6/8/12",
+      action: {
+        isPrimary: true,
+      },
+      distance: "触摸",
+      material: "自然环境"
+    },
+    {
+      name: "利爪术（野兽）",
+      effect: "强化野兽利爪，造成额外1d6点物理伤害",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "獠牙术（野兽）",
+      effect: "强化野兽獠牙，造成额外1d8点物理伤害",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "野兽治癒（野兽）",
+      effect: "恢复野兽1d4+休质/魅力调擊值的点生命值",
+      action: {
+        isPrimary: true,
+      },
+      durration: "立即",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "辨识方向（通用）",
+      effect: "通过自然能量确定方位",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      durration: "立即",
+      distance: "自身",
+      material: "自然环境"
+    },
+    {
+      name: "消除气味（通用）",
+      effect: "消除一个生物身上的气味",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      durration: "立即",
+      distance: "触摸",
+      material: "一片树叶"
+    },
+    {
+      name: "鸣雷（通用）",
+      effect: "在头顶天空制造雷鸣，使周围1公里内的人听到强烈轰鸣声。周围1.5米所有目标进行体质豁免，失则遭受到1d8点雷电魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      distance: "1.5米",
+      material: "有天空的自然环境"
+    },
+    {
+      name: "橡棍术（通用）",
+      effect: "让手中的木棍伤害变为1d8加感知调整值的狂野魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      durration: "1d4回合",
+      distance: "自身武器",
+      material: "一块橡木"
+    },
+    {
+      name: "创造纯水（水）",
+      effect: "创造200ml（0.02寸方米）的纯淨水。元素增强：可以创造200ml/等级的纯淨水",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      distance: "1.5米",
+      material: "有水分的自然环境"
+    },
+    {
+      name: "操水（水）",
+      effect: "可以控制0.5立方米的水流速度或使其漂浮在空气中。元素增强：0.5立方米/等级",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      durration: "1min",
+      distance: "6米",
+      material: "有水分的自然环境"
+    },
+    {
+      name: "燃火（火）",
+      effect: "在易燃物上点燃一个火苗。元素增强：在易燃物上点燃一团火焰，每回合造成感知调整值点狂野魔法伤害",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      durration: "1min",
+      distance: "1.5米",
+      material: "自然环境"
+    },
+    {
+      name: "控火（火）",
+      effect: "让最多1立方米燃烧的火焰立即熄灭或让火焰变幻出简单的形态。元素增强：3立方米",
+      action: {
+        isPrimary: true,
+        meta: "单手、咒语"
+      },
+      distance: "1.5米",
+      material: "自然环境"
+    },
+  ],
+  []
+];
+
 const fileInput = document.getElementById('file-upload');
 const previewImage = document.getElementById('image-preview');
 const uploadLabel = document.getElementById('upload-label');
@@ -1777,7 +1960,7 @@ function createSpellDialog(allSpells) {
         <h4>${spell.name}</h4>
         <p>
           <b>效果：</b>${spell.effect}<br/>
-          <b>动作：</b>${spell.action.isPrimary ? '主要动作': '次要动作'}，${spell.action.meta}<br/>
+          <b>动作：</b>${spell.action.isPrimary ? '主要动作': '次要动作'}${spell.action.meta ? `，${spell.action.meta}` : ''}<br/>
           ${spell.durration ? `<b>持续时间：</b>${spell.durration}<br/>` : ''}
           <b>距离：</b>${spell.distance}<br/>
           <b>施法材料：</b>${spell.material}
@@ -1789,10 +1972,9 @@ function createSpellDialog(allSpells) {
 
   container.querySelectorAll('button').forEach((button) => {
     button.onclick = (e) => {
-      debugger;
       const spell = spells[parseInt(e.target.dataset.value)];
       const {spellIndex, spellTier} = document.querySelector('#spell-name-dialog').dataset;
-      setSpell(spellTier, spellIndex, spell.name);
+      setSpell(spellTier, spellIndex, spell.name, allSpells);
       closeDialog();
     }
   });

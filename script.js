@@ -1537,9 +1537,11 @@ const dialogContents = dialog.querySelectorAll('.dialog-content');
 const dialogSelectInputs = document.querySelectorAll('.dialog-select');
 dialogSelectInputs.forEach((dialogSelectInput) => {
   dialogSelectInput.addEventListener('click', function(e) {
+    if (e.target.disabled) return;
     openDialogWithContent(e);
   });
   dialogSelectInput.addEventListener('keydown', function(e) {
+    if (e.target.disabled) return;
     if (e.key === 'Enter' || e.key === 'Delete' || e.key === 'Backspace') {
       e.preventDefault();
       openDialogWithContent(e);
@@ -1773,7 +1775,8 @@ function resetOccupationSideEffects() {
   const faithInput = document.querySelector('input#faith');
   faithInput.classList.remove('locked');
   faithInput.value = '';
-  faithInput.disabled = false;
+  faithInput.disabled = true;
+  faithInput.placeholder = '请先选阵营';
   faithInput.parentElement.classList.add('disabled');
 
   const teamInput = document.querySelector('input#team');

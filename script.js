@@ -1705,6 +1705,9 @@ const dialogSelectInputs = document.querySelectorAll('.dialog-select');
 dialogSelectInputs.forEach((dialogSelectInput) => {
   dialogSelectInput.addEventListener('touchstart', function(e) {
     e.preventDefault();
+    const viewport = document.querySelector('meta[name="viewport"]');
+    viewport.content = 'width=device-width, initial-scale=1, maximum-scale=1';
+    setTimeout(() => { viewport.content = 'width=device-width, initial-scale=1'; }, 100);
     e.target.click();
   });
   dialogSelectInput.addEventListener('click', function(e) {

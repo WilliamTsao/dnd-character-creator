@@ -252,8 +252,8 @@ function setSpell(tier, index, spellName, allSpells) {
   slot.querySelector('.effect-text').innerText = spell.durration ? `${spell.effect}。持续：${spell.durration}` : spell.effect;
   slot.querySelector('#spell-ingrediants').value = spell.material;
   slot.querySelector('#spell-distance').value = spell.distance;
-  slot.querySelector('#primary').checked = !!spell.action.isPrimary;
-  slot.querySelector('#secondary').checked = !spell.action.isPrimary;
+  slot.querySelector('#primary').checked = spell.action.isPrimary === 'both' || !!spell.action.isPrimary;
+  slot.querySelector('#secondary').checked = spell.action.isPrimary === 'both' || !spell.action.isPrimary;
 
   persistState();
 }

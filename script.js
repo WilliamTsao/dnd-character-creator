@@ -1384,12 +1384,12 @@ const druidSpells = [
     },
     {
       name: "水果爆弹（植物）",
-      effect: "在水果中注入狂野魔法，投中第1个目标后向周围十字爆炸。造成1d4/6/8+感调的狂魔伤害。元素增强：1d6/8/12",
+      effect: "在水果中注入狂野魔法，击中目标后向周围十字爆炸。小/中/大型水果造成1d4/6/8+感调的狂魔伤害。元素增强：1d6/8/12",
       action: {
         isPrimary: true,
       },
-      distance: "触摸",
-      material: "自然环境"
+      distance: "9米",
+      material: "触摸距离内自然的水果"
     },
     {
       name: "利爪术（野兽）",
@@ -1579,7 +1579,7 @@ const druidSpells = [
       name: "迅捷野兽（野兽）",
       effect: "使野兽移动速度增加3m/回合",
       action: {
-        isPrimary: true,
+        isPrimary: 'both',
       },
       durration: "1d4回合",
       distance: "触摸",
@@ -2125,12 +2125,13 @@ function createSpellDialog(allSpells) {
 
   const container = document.querySelector('#spell-name-dialog .spell-options-tile-container');
   container.innerHTML = spells.map((spell, index) => {
+    const action = spell.action.isPrimary === 'both' ? '主要/次要' : (spell.action.isPrimary ? '主要动作': '次要动作');
     return `
       <div class="tile" data-tier=${spell.tier}>
         <h4>${spell.name}</h4>
         <p>
           <b>效果：</b>${spell.effect}<br/>
-          <b>动作：</b>${spell.action.isPrimary ? '主要动作': '次要动作'}${spell.action.meta ? `，${spell.action.meta}` : ''}<br/>
+          <b>动作：</b>${action}${spell.action.meta ? `，${spell.action.meta}` : ''}<br/>
           ${spell.durration ? `<b>持续时间：</b>${spell.durration}<br/>` : ''}
           <b>距离：</b>${spell.distance}<br/>
           <b>施法材料：</b>${spell.material}

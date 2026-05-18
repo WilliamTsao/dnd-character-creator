@@ -1703,6 +1703,10 @@ const dialog = document.getElementById('dialog');
 const dialogContents = dialog.querySelectorAll('.dialog-content');
 const dialogSelectInputs = document.querySelectorAll('.dialog-select');
 dialogSelectInputs.forEach((dialogSelectInput) => {
+  dialogSelectInput.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    e.target.click();
+  });
   dialogSelectInput.addEventListener('click', function(e) {
     if (e.target.disabled) return;
     openDialogWithContent(e);

@@ -345,7 +345,7 @@ const occupationsMetadata = {
     ]
   },
   cleric: {
-    description: ['牧师是神灵虔诚的侍从，他们宣讲神迹和教义，为迷茫者洗涤心灵寻找方向，为信众提供精神慰藉。这些献身于信仰的圣职者将他们神祇的尊名传遍八方。牧师的能力源于自己对神祇虔诚的信仰，有的牧师是刚猛的战士擅长正面作战，有的牧师是经验丰富的指挥官擅长提振盟友士气，有的牧师是睿智的施法者擅长释放神术打击敌人，有的牧师则是怜悯的医者擅长通过神术治疗它人……', '总的来说，由于神灵的权柄和领域不同，牧师的战斗方式和释放的神术也千差万别，但是他们在信仰与神迹的引领下，都背负着伟大的使命。'],
+    description: ['牧师是神灵虔诚的侍从，他们宣讲神迹和教义，为迷茫者洗涤心灵寻找方向，为信众提供精神慰藉。这些献身于信仰的圣职者将他们神祇的尊名传遍八方。牧师的能力源于自己对神祇虔诚的信仰，有的牧师是刚猛的战士擅长正面作战，有的牧师是经验丰富的指挥官擅长提振盟友士气，有的牧师是睿智的施法者擅长释放神术打击敌人，有的牧师则是怜悯的医者擅长通过神术治疗他人……', '总的来说，由于神灵的权柄和领域不同，牧师的战斗方式和释放的神术也千差万别，但是他们在信仰与神迹的引领下，都背负着伟大的使命。'],
     branches: [
       {
         name: '生命领域',
@@ -1507,7 +1507,174 @@ const druidSpells = [
       material: "自然环境"
     },
   ],
-  []
+  [
+    {
+      name: "冷风（风）",
+      effect: "使单一目标周围环绕一阵冷风，豁免失败减少目标一个动作，1d4主/次/移动/反应。元素增强：减少两个动作",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "9米",
+      material: "微风及以上的自然环境"
+    },
+    {
+      name: "地颤（土）",
+      effect: "使3m内的一格地面颤动，目标进行平衡感鉴定，失败则倒地。元素增强：震动持续1d4回合，经过此区域的目标进行平衡感鉴定",
+      action: {
+        isPrimary: true,
+      },
+      distance: "3米",
+      material: "自然沙地或土壤"
+    },
+    {
+      name: "投石（土）",
+      effect: "凝聚三块蕴含狂野魔法的石头并投掷向一名目标每块造成1d6狂野魔法伤害。元素增强：1d6+感知调整值",
+      action: {
+        isPrimary: true,
+      },
+      durration: "立即",
+      distance: "6米",
+      material: "有石头的自然环境或三块岩石"
+    },
+    {
+      name: "荆棘穿刺（植物）",
+      effect: "手臂处引导出一根荆棘可对4.5m内的目标造成1d6的穿刺伤害或缠绕一个小型物体。元素增强：距离6m伤害+感知调整值",
+      action: {
+        isPrimary: true,
+      },
+      distance: "4.5米",
+      material: "一根藤蔓"
+    },
+    {
+      name: "自然疗伤（植物）",
+      effect: "触碰目标为目标恢复1d8生命，可恢复负向生命。元素增强：回复1d8+感知生命，第二回合回复一半，可恢复负向生命",
+      action: {
+        isPrimary: true,
+      },
+      distance: "触碰",
+      material: "绿色植物的叶片"
+    },
+    {
+      name: "化兽为友（野兽）",
+      effect: "对一个中立或敌对的野兽使用，魅力对抗感知，成功后可以消除其敌意戒备心理。",
+      action: {
+        isPrimary: true,
+      },
+      durration: "10min",
+      distance: "1.5米",
+      material: "动物的毛发"
+    },
+    {
+      name: "绑定五感（野兽）",
+      effect: "可以与自己亲近的野兽共享五感",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1小时",
+      distance: "触摸/20m/等级",
+      material: "无"
+    },
+    {
+      name: "迅捷野兽（野兽）",
+      effect: "使野兽移动速度增加3m/回合",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "黑暗视觉（通用）",
+      effect: "可以让目标拥有短暂的夜视能力",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1min",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "辨识毒性（通用）",
+      effect: "可以辨识一个生物是否具有毒性或疾病",
+      action: {
+        isPrimary: true,
+      },
+      durration: "立即",
+      distance: "1.5m",
+      material: "无"
+    },
+    {
+      name: "狂野抗性（通用）",
+      effect: "使目标力量、体质、感知、反应豁免增加1d4",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "净化食物（通用）",
+      effect: "可以净化0.5立方米的被污染的食物",
+      action: {
+        isPrimary: true,
+      },
+      durration: "立即",
+      distance: "触摸",
+      material: "无"
+    },
+    {
+      name: "水流（水）",
+      effect: "可以让0.5立方米内水随意流动也可以让流速加快或静止。元素增强：0.5立方米/等级",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1min",
+      distance: "6m",
+      material: "有水的自然环境"
+    },
+    {
+      name: "水弹（水）",
+      effect: "让身边3m内的水喷发出一个具有狂野魔法的水弹，弹射一位6m内的目标造成2d4狂野魔法伤害。元素增强：2d4+感知调整值",
+      action: {
+        isPrimary: true,
+      },
+      distance: "6m",
+      material: "0.1立方米的水"
+    },
+    {
+      name: "明焰（火）",
+      effect: "点亮一团火焰，照明周围3*3m范围，并使潜行隐身单位现形。元素增强：6*6m范围，持续1/2等级d4回合",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "6m",
+      material: "身边1.5m内燃烧的火焰"
+    },
+    {
+      name: "炽焰（火）",
+      effect: "单回合爆发一团1.5平方米的火焰，对目标造成2d4+感调的魔法伤害。元素增强：持续1d4回合的爆发火焰",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "6m",
+      material: "身边1.5m内燃烧的火焰"
+    },
+    {
+      name: "踏风（风）",
+      effect: "在微风环境中移动速度增加1.5m。元素增强：速度增加1/2等级*1.5m",
+      action: {
+        isPrimary: true,
+      },
+      durration: "1d4回合",
+      distance: "自身",
+      material: "微风及以上的自然环境"
+    },
+  ]
 ];
 
 const fileInput = document.getElementById('file-upload');
